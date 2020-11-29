@@ -16,14 +16,14 @@ function imageMode(color) {
 
 function mode(type) {
   if (type === "dark") {
-    nav.style.backgroundColor = "rgb(0 0 0 / 50%)";
+    // nav.style.backgroundColor = "rgb(0 0 0 / 50%)";
     textBox.style.backgroundColor = "rgb(255,255,255)";
     toggleIcon.children[0].textContent = "Dark Mode";
     toggleIcon.children[1].classList.remove("fa-sun");
     toggleIcon.children[1].classList.add("fa-moon");
     imageMode("dark");
   } else {
-    nav.style.backgroundColor = "rgb(255 255 255 / 50%)";
+    // nav.style.backgroundColor = "rgb(255 255 255 / 50%)";
     textBox.style.backgroundColor = "rgb(0,0,0)";
     toggleIcon.children[0].textContent = "Light Mode";
     toggleIcon.children[1].classList.replace("fa-moon", "fa-sun");
@@ -35,12 +35,27 @@ function mode(type) {
 function switchTheme(event) {
   if (event.target.checked) {
     document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
     mode("dark");
   } else {
     document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "light");
     mode();
   }
 }
 
 //  Event Listener
 toggleSwitch.addEventListener("change", switchTheme);
+
+// check localStorage for theme
+
+const currentTheme = localStorage.getItem("theme");
+
+if (currentTheme) {
+  document.documentElement.setAttribute("data-theme", currentTheme);
+  if (currentTheme === "dark") {
+    toggleSwitch.checked = true;
+    mode("dark");
+  }
+}
+console.log(currentTheme);
